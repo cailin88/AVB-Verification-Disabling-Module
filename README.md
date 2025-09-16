@@ -38,12 +38,15 @@ A separated module for disabling Android Verified Boot (AVB) and auto-recovering
  
 三、环境要求（Requirements）
  
-1. 设备端：
+1. 设备端：
+ 
 - Android 8.0及以上版本；
 - Bootloader已解锁；
 - 已安装Magisk 20.4及以上（需正常激活，支持Magisk Hide）；
 - 预留至少100MB存储空间（用于备份 vbmeta 和日志文件）。
-2. 电脑端（可选，用于应急恢复）：
+ 
+2. 电脑端（可选，用于应急恢复）：
+ 
 - 安装Android SDK Platform Tools（含ADB、Fastboot工具）；
 - Windows/Linux/macOS系统均可（离线恢复包适配多系统）。
  
@@ -120,61 +123,111 @@ A4：需重新刷入Magisk补丁包（可通过Fastboot刷写 magisk_patched-xx
  
 plaintext  
 AVB-Disabler-with-Rescue/
-├── AVB-Disabler/                # AVB禁用模块
-│   ├── device_adapt/            # 设备适配目录
-│   │   ├── vbmeta_paths.conf    # 机型-分区路径配置
-│   │   └── prop_override.sh     # 设备专属属性脚本
-│   ├── common/                  # 核心脚本
-│   │   ├── post-fs-data.sh      # 启动后执行脚本
-│   │   └── system_hook/         # 系统Hook脚本
-│   ├── system/                  # 系统配置
-│   ├── check_compatibility.sh   # 兼容性检测脚本
-│   └── module.prop              # 模块信息
+├── AVB-Disabler/                
+# AVB禁用模块
+│   ├── device_adapt/            
+# 设备适配目录
+│   │   ├── vbmeta_paths.conf    
+# 机型-分区路径配置
+│   │   └── prop_override.sh     
+# 设备专属属性脚本
+│   ├── common/                  
+# 核心脚本
+│   │   ├── post-fs-data.sh      
+# 启动后执行脚本
+│   │   └── system_hook/         
+# 系统Hook脚本
+│   ├── system/                  
+# 系统配置
+│   ├── check_compatibility.sh   
+# 兼容性检测脚本
+│   └── module.prop              
+# 模块信息
 │
-├── Brick-Rescue/                # 救砖模块
-│   ├── emergency/               # 应急恢复目录
-│   │   ├── offline_recovery.zip # 离线恢复包
-│   │   └── fastboot_cmd.txt     # Fastboot指令模板
-│   ├── status/                  # 状态日志目录
-│   ├── system/bin/              # 核心工具（avb_stealthd、diag_system等）
-│   └── module.prop              # 模块信息
+├── Brick-Rescue/                
+# 救砖模块
+│   ├── emergency/               
+# 应急恢复目录
+│   │   ├── offline_recovery.zip 
+# 离线恢复包
+│   │   └── fastboot_cmd.txt     
+# Fastboot指令模板
+│   ├── status/                  
+# 状态日志目录
+│   ├── system/bin/              
+# 核心工具（avb_stealthd、diag_system等）
+│   └── module.prop              
+# 模块信息
 │
-├── AVB-Disabler-With-Rescue/    # 组合安装包
-│   ├── modules/                 # 子模块压缩包
-│   ├── verify/                  # 校验目录（MD5、兼容性检测）
-│   └── scripts/                 # 安装脚本
+├── AVB-Disabler-With-Rescue/    
+# 组合安装包
+│   ├── modules/                 
+# 子模块压缩包
+│   ├── verify/                  
+# 校验目录（MD5、兼容性检测）
+│   └── scripts/                 
+# 安装脚本
 │
-├── docs/                        # 文档目录
-│   ├── troubleshooting.md       # 故障排查指南
-│   └── device_list.md           # 已验证设备列表
+├── docs/                        
+# 文档目录
+│   ├── troubleshooting.md       
+# 故障排查指南
+│   └── device_list.md           
+# 已验证设备列表
 │
-├── .gitignore                   # Git忽略文件配置
-├── LICENSE                      # 开源许可证（见“九、许可证”）
-└── README.md                    # 本自述文件
+├── .gitignore                   
+# Git忽略文件配置
+├── LICENSE                      
+# 开源许可证（见“九、许可证”）
+└── README.md                    
+# 本自述文件
  
  
 八、注意事项（Notes）
  
-1. 合法性与安全性：
+1. 合法性与安全性：
+ 
 - 仅用于合法的开发测试，禁止用于破解他人设备、侵犯隐私或其他违法场景；
 - 禁用AVB后，设备易受恶意软件攻击，请勿存储银行卡、密码等敏感信息；
 - 操作前务必备份设备数据（推荐使用TWRP全量备份，或通过电脑导出重要文件）。
-2. 兼容性补充：
+ 
+2. 兼容性补充：
+ 
 - 支持Android 14及 vbmeta v3 格式；
 - 动态分区设备需确保 device_adapt/vbmeta_paths.conf 中已配置对应路径（如 /dev/block/mapper/vbmeta ）；
 - 部分品牌（如华为、OPPO）的设备可能有额外锁机制，需先解除对应限制（如华为的FRP锁）。
-3. 权限说明：
+ 
+3. 权限说明：
+ 
 - 本项目所有者为“好无聊”，使用者仅享有“了解、使用、非破坏性改进”权限，禁止商业售卖、二次授权或修改核心逻辑（如拆分模块、改变恢复机制）。
  
 九、许可证（License）
  
-本项目采用 MIT许可证（MIT License），具体条款如下：
+本项目采用 Apache License 2.0（由Apache软件基金会制定的宽松式开源协议），具体条款如下：
  
-- 允许自由使用、复制、修改、合并、发布、分发、 sublicense 和/或销售本项目的副本；
-- 需在所有副本或重要部分中保留原始版权声明和许可证声明；
-- 作者不对项目的使用后果承担责任，项目按“现状”提供，无任何担保（包括但不限于适销性、特定用途适用性的担保）。
+1. 被授权人权利
  
-完整许可证文本见项目根目录的 LICENSE 文件。
+被授权人可在符合协议要求的前提下，享有广泛使用权限：
+ 
+- 自由使用、复制、分发、修改本项目的全部或部分代码及文档；
+- 对项目进行二次开发，生成衍生作品；
+- 将本项目（含原始版本、修改版本、衍生作品）用于商业场景，包括但不限于捆绑销售、单独提供服务等。
+ 
+2. 被授权人义务
+ 
+被授权人在使用、分发本项目（含衍生作品）时，需履行以下义务：
+ 
+- 分发副本（含电子版、物理介质版）时，必须保留原始项目的版权声明、专利声明、商标声明及项目归属信息（包括但不限于本项目所有者“好无聊”的署名）；
+- 若对项目源代码文件进行修改（如优化设备适配逻辑、调整恢复机制），需在修改后的文件中添加清晰的变更声明，注明修改内容、修改时间及修改人；
+- 以任何形式（如线上分发、线下拷贝）提供项目副本时，必须随副本一同包含完整的Apache License 2.0协议文本（可直接引用本项目根目录下的 LICENSE 文件）；
+- 涉及专利相关权益时，原始贡献者（含本项目所有者）授予被授权人非独占、全球范围的专利使用权；若被授权人分发修改后的项目，需向后续使用者同样授予该专利使用权，确保专利权益的连续性；
+- 未经本项目所有者或相关商标权利人书面许可，不得使用本项目的名称、Logo等商标元素推广衍生作品或其他产品/服务。
+ 
+3. 免责声明
+ 
+本项目按“现状”提供，Apache软件基金会及本项目所有者“好无聊”不对项目的可用性、稳定性、安全性作出任何明示或暗示的担保，包括但不限于“适用于特定商业场景”“无程序漏洞”“与第三方软件完全兼容”等担保。若因使用本项目导致任何直接或间接损失（如设备损坏、数据丢失、商业损失等），项目所有者及Apache软件基金会不承担任何法律责任。
+ 
+完整许可证文本见项目根目录的 LICENSE 文件，或访问Apache官方网站（https://www.apache.org/licenses/LICENSE-2.0 ）查看官方协议内容。
  
 十、联系方式（Contact）
  
@@ -185,10 +238,7 @@ AVB-Disabler-with-Rescue/
  
 反馈时请注明“AVB-Disabler-with-Rescue反馈”，以便快速定位问题。
 
-
-
-Description of English version
-
+Introduction in English
 
 AVB-Disabler-with-Rescue: Separated AVB Disabling & Boot Recovery Module
  
@@ -242,7 +292,7 @@ Compared with traditional solutions, this project optimizes compatibility across
 - Android SDK Platform Tools installed (including ADB and Fastboot tools);
 - Windows/Linux/macOS systems are all supported (the offline recovery package is compatible with multiple systems).
  
-4. Installation Steps (Installation Guide)
+4. Installation Guide (Installation Guide)
  
 Method 1: One-click Installation with Combined Package (Recommended)
  
@@ -368,13 +418,31 @@ AVB-Disabler-with-Rescue/
  
 9. License (License)
  
-This project adopts the MIT License. The specific terms are as follows:
+This project is licensed under the Apache License 2.0 (a permissive open-source license developed by the Apache Software Foundation). The specific terms are as follows:
  
-- Permission is granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software;
-- The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software;
-- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY.
+1. Licensee's Rights
  
-The full license text can be found in the  LICENSE  file in the project root directory.
+Subject to compliance with the terms of this License, the Licensee shall have broad usage rights:
+ 
+- Freely use, copy, distribute, and modify all or part of the code and documentation of this project;
+- Conduct secondary development on the project to create derivative works;
+- Use this project (including original versions, modified versions, and derivative works) in commercial scenarios, including but not limited to bundled sales and providing services independently.
+ 
+2. Licensee's Obligations
+ 
+When using or distributing this project (including derivative works), the Licensee shall fulfill the following obligations:
+ 
+- When distributing copies (including electronic versions and physical media versions), the Licensee must retain the copyright notice, patent notice, trademark notice, and project ownership information of the original project (including but not limited to the attribution of "Hao Wuliao", the owner of this project);
+- If modifications are made to the project's source code files (e.g., optimizing device adaptation logic, adjusting recovery mechanisms), the Licensee shall add a clear change notice to the modified files, specifying the modification content, modification time, and modifier;
+- When providing project copies in any form (e.g., online distribution, offline copying), the Licensee must include the complete text of the Apache License 2.0 along with the copies (the  LICENSE  file in the root directory of this project may be directly referenced);
+- Regarding patent-related rights, the original contributors (including the owner of this project) grant the Licensee a non-exclusive, worldwide patent license; if the Licensee distributes the modified project, the same patent license must be granted to subsequent users to ensure the continuity of patent rights;
+- Without the written permission of the project owner or relevant trademark right holders, the Licensee shall not use the project's name, logo, or other trademark elements to promote derivative works or other products/services.
+ 
+3. Disclaimer
+ 
+This project is provided "as is". Neither the Apache Software Foundation nor "Hao Wuliao", the owner of this project, makes any express or implied warranties regarding the project's usability, stability, or security, including but not limited to warranties of "being suitable for specific commercial scenarios", "being free of program vulnerabilities", and "being fully compatible with third-party software". The project owner and the Apache Software Foundation shall not be liable for any direct or indirect damages (such as device damage, data loss, commercial losses, etc.) caused by the use of this project.
+ 
+The full text of the License can be found in the  LICENSE  file in the root directory of this project, or you can visit the official Apache website (https://www.apache.org/licenses/LICENSE-2.0) to view the official License content.
  
 10. Contact Information (Contact)
  
@@ -383,4 +451,4 @@ If you encounter unsupported device adaptation issues or find functional bugs, y
 - GitHub Issues: Submit an Issue directly in the project repository (you need to attach the device model, Android version, operation steps, and error logs);
 - Email: [cailin44@outlook.com].
  
-Please indicate "AVB-Disabler-with-Rescue Feedback" when providing feedback to facilitate quick problem localization.
+Please indicate "AVB-Disabler-with-Rescue Feedback" when providing feedback to facilitate quick problem localization.  
